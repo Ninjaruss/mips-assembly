@@ -38,6 +38,28 @@
 # 10                --> $t2
 # 100               --> $t3
 main:
+	li $s0, 0	## sum = 0
+	la $s1, sumarr	## sumarr
+	li $t0, 0	## i = 0
+	li $t2, 10	## 10
+	
+	loop1:
+		lw $t1, ($s1) ## need to load the pointer pointing to array[index]
+		add $s0, $s0, $t1
+		addi $t0, $t0, 1
+		blt $t0, $t2, loop1 ## i < size
+	
+	li $s3, 45689	## num = 45689
+	li $s2, 0	## rev = 0
+	li $t1, -1	## d = -1
+	
+	loop2:
+		## div $s3, $t2 ## num % 10
+		div $t1, $s3, $t2 ## d = num/10? maybe it actually is % due to int div
+		mul $s2, $s2, $t2 ## rev*10
+		add $s2, $s2, $t1 ## rev+d
+		div $s3, $s3, $t2 ## num/10
+		bgt $s3, 0, loop2
 
 exit:
   la   $a0, sumlbl    # puts sumlbl into arg0 (a0 register) for cout
