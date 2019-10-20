@@ -72,23 +72,23 @@ main:
 	
 	
 	loop3:
-		#lw $t4, ($s5) 		# load arr ptr
-		#mul $t0, $s6, 4		# offset for arr[beg]
-		#sw $t0, beg
-		#lw $t5, beg($t4)	# load value of arr[beg]
-		#mul $t0, $s7, 4		# offset for arr[end]
-		#sw $t0, end
-		#lw $t6, end($t4)	# load value of arr[beg]
+		lw $t5, ($s5) 		# load arr ptr for beg
+		mul $t0, $s6, 4		# offset for arr[beg]
+		add $t5, $t5, $t0	# move pointer to arr[beg]
 		
-		#beq $t5, $t6, exit1
+		lw $t6, ($s5)		# load arr ptr for end
+		mul $t0, $s7, 4		# offset for arr[end]
+		add $t6, $t6, $t0	# move pointer to arr[end]
 		
-		#addi $s6, $s6, 1
-		#addi $s7, $s7, -1
+		beq $t5, $t6, exit1
 		
-		#blt $s6, $s7, loop3 # beg < end
-		#exit1:
-			#li $s4, -1
-			#j exitL3
+		addi $s6, $s6, 1
+		addi $s7, $s7, -1
+		
+		blt $s6, $s7, loop3 # beg < end
+		exit1:
+			li $s4, -1
+			j exitL3
 	exitL3:
 
 exit:
