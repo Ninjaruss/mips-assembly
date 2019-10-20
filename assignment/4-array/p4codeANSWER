@@ -22,6 +22,8 @@
                .word 3
                .word 2
                .word 1
+    beg:	.word 1
+    end:	.word 1
 
 .text
 
@@ -68,23 +70,25 @@ main:
 	li $s7, 8	# end = 8
 	li $s4, 1	# isPalindrome = 1
 	
+	
 	loop3:
 		#lw $t4, ($s5) 		# load arr ptr
 		#mul $t0, $s6, 4		# offset for arr[beg]
 		#sw $t0, beg
 		#lw $t5, beg($t4)	# load value of arr[beg]
-		
 		#mul $t0, $s7, 4		# offset for arr[end]
 		#sw $t0, end
 		#lw $t6, end($t4)	# load value of arr[beg]
 		
-		#beq $t5, $t6, exitL3
-		#li $s4, -1
+		#beq $t5, $t6, exit1
+		
+		#addi $s6, $s6, 1
+		#addi $s7, $s7, -1
+		
+		#blt $s6, $s7, loop3 # beg < end
 		#exit1:
-		
-		
-		
-		blt $s6, $s7, loop3 # beg < end
+			#li $s4, -1
+			#j exitL3
 	exitL3:
 
 exit:
